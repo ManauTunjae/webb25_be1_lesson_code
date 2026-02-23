@@ -1,6 +1,5 @@
-import express from 'express'
 import { Router } from 'express';
-const router = Router();
+const artistsRouter = Router();
 
 let artists = [
   { id: 1, name: 'Bad Bunny' },
@@ -8,13 +7,7 @@ let artists = [
   { id: 3, name: 'Radiohead' },
 ];
 
-router.get("/", (req, res) => {
-    return res.json({
-        message: "Healthy?"
-    })
-})
-
-router.get("/api/artists", (req, res) => {
+artistsRouter.get("/", (req, res) => {
   const { q } = req.query 
   if(q) {
     return res.json(artists.filter(artist => artist.name.includes(q)))
@@ -22,7 +15,7 @@ router.get("/api/artists", (req, res) => {
   return res.json(artists)
 })
 
-router.get("/api/artists/:id", (req, res) => {
+artistsRouter.get("/:id", (req, res) => {
   const id = Number(req.params.id)
   if(isNaN(id)) {
     return res.status(400).json({
@@ -38,7 +31,7 @@ router.get("/api/artists/:id", (req, res) => {
   return res.json(artist)
 })
 
-router.post("/api/artists", (req, res) => {
+artistsRouter.post("/", (req, res) => {
     const { name } = req.body
     if(!name || typeof name !== "string"){
       return res.status(400).json({
@@ -58,7 +51,7 @@ router.post("/api/artists", (req, res) => {
 })
 
 // Uppgift 1: Lägg till UPDATE för att kunna uppdatera artists.
-router.put('/api/artists/:id', (req, res) => {
+artistsRouter.put('/:id', (req, res) => {
   const id = Number(req.params.id)
   const artist = artists.find(artist => artist.id === id)
   if(!artist) {
@@ -80,20 +73,20 @@ router.put('/api/artists/:id', (req, res) => {
   }) 
 })
 
-// UPPGIFT 2: Lägg till DELETE för att ta bort artists.
-router.delete('/api/artists/:id', (req, res) => {
+// UPPGIFT 2: lägg till DELETE för att kuna ta bort artists.
+artistsRouter.delete('/:id', (req, res) => {
   const id = Number(req.params.id)
-  const artist = artists.find(artist => artist.id === id)
-  if(!artist) {
+  const artistIndex = artists.findIndex(a => a.id === id)
+  if(artistIndex === -1) {
     return res.status(404).json({
       message: "Artist does not exist"
     })
   }
 
-  artists.splice(artist, 1)
+  artists.splice(artistIndex, 1)
   return res.status(204).json({
     message: "Delete successful."
   }) 
 })
 
-export default router; 
+export default artistsRouter; 
