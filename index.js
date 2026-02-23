@@ -66,46 +66,6 @@ app.post("/api/artists", (req, res) => {
     return res.status(201).json(artist)
 })
 
-// Uppgift 1: lägg till PUT
-app.put('/api/artists/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const artist = artists.find(artist => artist.id === id)
-  if(!artist) {
-    return res.status(404).json({
-      message: "Artist does not exist"
-    })
-  }
-
-  const { name } = req.body
-  if (!name || typeof name !== "string") {
-    return res.status(400).json({
-      message: "New artist name is required"})
-  }
-
-  artist.name = name
-  res.json(artist)
-  return res.status(200).json({
-    message: "Updated successfully"
-  }) 
-})
-
-// UPPGIFT 2: Lägg till DELETE för att ta bort artist
-app.delete('/api/artists/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const artist = artists.find(artist => artist.id === id)
-  if(!artist) {
-    return res.status(404).json({
-      message: "Artist does not exist"
-    })
-  }
-
-  artists.splice(artist, 1)
-  return res.status(204).json({
-    message: "Delete successful."
-  }) 
-})
-
-
 app.listen(PORT,(error) => {
     if(error) {
         console.log("Error in running express", error.message)
