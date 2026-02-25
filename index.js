@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from 'dotenv';
 import cors from "cors"
 import artistsRouter from "./routes/artists.js"
+import songsRouter from "./routes/songs.js";
 
 dotenv.config();
 
