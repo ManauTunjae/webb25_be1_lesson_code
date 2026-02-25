@@ -18,4 +18,23 @@ songsRouter.get('/', (req, res) => {
   return res.json(songs);
 });
 
+//B2. Return a song which matching id
+songsRouter.get('/:id', (req, res) => {
+  const id = Number(req.params.id)
+  if (isNaN(id)) {
+    return res.status(400).json({
+      message: 'Id has to be a valid number'
+    })
+  }
+
+  const songList = songs.find(s => s.id === id)
+  if (!songList) {
+    return res.status(404).json({
+      message: 'Song does not exist!'
+    })
+  }
+  return res.json(songList);
+
+})
+
 export default songsRouter;
