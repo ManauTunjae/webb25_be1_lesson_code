@@ -9,4 +9,13 @@ let songs = [
   { id: 5, title: "Lush Life", artist: "Zara Larsson" },
 ];
 
+//B1. Return all songs by GET
+songsRouter.get('/', (req, res) => {
+  const { q } = req.query;
+  if (q) {
+    return res.json(songs.filter(song => song.title.includes(q)));
+  }
+  return res.json(songs);
+});
+
 export default songsRouter;

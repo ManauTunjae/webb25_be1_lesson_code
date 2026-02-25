@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/artists', artistsRouter);
+app.use('/api/songs', songsRouter);
 
 const PORT = process.env.PORT || 3000
 
