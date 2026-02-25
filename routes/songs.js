@@ -34,7 +34,25 @@ songsRouter.get('/:id', (req, res) => {
     })
   }
   return res.json(songList);
+})
 
+//B3. CREATE song by.post
+songsRouter.post('/', (req, res) => {
+  const { title, artist } = req.body
+  if (!title || typeof title !== "string" || !artist || typeof artist !== "string") {
+    return res.status(400).json({
+      message: "Songs or artist have to be a valid string!"
+    })
+  }
+
+  const lastId = Math.max(...songs.map(s => s.id))
+  const newSong = {
+    id: lastId + 1,
+    title,
+    artist
+  }
+  songs.push(newSong)
+  return res.status(201).json(newSong)
 })
 
 export default songsRouter;
