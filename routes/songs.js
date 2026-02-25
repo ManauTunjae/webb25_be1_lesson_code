@@ -55,4 +55,25 @@ songsRouter.post('/', (req, res) => {
   return res.status(201).json(newSong)
 })
 
+//B4. UPDATE songs by .put /:id
+songsRouter.put('/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const song = songs.find(s => s.id === id)
+  if (!song) {
+    return res.status(404).json({
+      message: 'Song does not exist!'
+    })
+  }
+
+  const { title, artist } = req.body
+  if (!title || typeof title !== "string" || !artist || typeof artist !== "string") {
+    return res.status(400).json({
+      message: "Songs or artist have to be a valid string!"
+    })
+  }
+  song.title = title;
+  song.artist = artist;
+  return res.status(200).json(song) 
+})
+
 export default songsRouter;
