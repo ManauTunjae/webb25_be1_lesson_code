@@ -76,4 +76,19 @@ songsRouter.put('/:id', (req, res) => {
   return res.status(200).json(song) 
 })
 
+//B5. DELETE a song by id with .delete /:id
+songsRouter.delete('/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const songIndex = songs.findIndex(s => s.id === id)
+  if (songIndex === -1) {
+    return res.status(404).json({
+      message: 'Song does not exist!'
+    })
+  }
+
+  songs.splice(songIndex, 1)
+  return res.status(204).send() // Postman tolkar detta som success automatisk, då behöver ingen .json meddelande
+})
+
+
 export default songsRouter;
